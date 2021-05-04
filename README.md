@@ -1,5 +1,5 @@
-# aspnet202104
-Material relacionado con el curso de ASP.NET Core MVC impartido en UCenfotec (modalidad virtual) en Setiembre 2020.
+# aspnetmvc202105
+Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framework) impartido para Babel Learning (modalidad virtual) en Mayo 2020.
 
 ### Requerimientos de software
 * Microsoft .NET Core, https://dot.net, Instalar el SDK para Windows
@@ -9,4 +9,3 @@ Material relacionado con el curso de ASP.NET Core MVC impartido en UCenfotec (mo
 
 ### Bases de datos de ejemplo
 * https://github.com/Microsoft/sql-server-samples/tree/master/samples/databases/northwind-pubs
-* https://github.com/lerocha/chinook-database
