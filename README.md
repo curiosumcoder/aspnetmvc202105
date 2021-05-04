@@ -2,7 +2,7 @@
 Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framework) impartido para Babel Learning (modalidad virtual) en Mayo 2020.
 
 ### Requerimientos de hardware y software
-* Requisitos mínimos del hardware que ocupamos. 
+* Requisitos mínimos del hardware. 
 	https://docs.microsoft.com/en-us/visualstudio/releases/2019/system-requirements
 	
 * Microsoft SQL Server 2008 R2 o superior. 
