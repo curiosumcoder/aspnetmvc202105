@@ -49,5 +49,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Northwind.Store.Data\Northwind.Store.Data.csproj">
+      <Project>{bd8645b2-bf77-4df2-ae58-d2f8b985895d}</Project>
+      <Name>Northwind.Store.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Store.Model\Northwind.Store.Model.csproj">
+      <Project>{fc8a1e65-62a1-4b18-922d-787163176f7a}</Project>
+      <Name>Northwind.Store.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
