@@ -32,7 +32,7 @@ Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framewor
 		
 	Se debe confirmar además de los "Individual components":
 		+ .NET Framework 4.8 SDK
-		+ .NET Framework 4.8 targting pack
+		+ .NET Framework 4.8 targeting pack
 		
 	En caso de contar con una instalación del Visual Studio 2019, proceder con la actualización a la última versión, 
 	y confirmar que se tengan instalados los “workloads” e "Individual components" señalados en el punto anterior. 
@@ -49,9 +49,9 @@ Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framewor
 	de la página.
 	
 * Navegadores Web actualizados a la última versión. 
-	https://www.mozilla.org/en-US/firefox/
-	https://www.google.com/chrome/index.html
-	https://www.microsoft.com/en-us/edge
+- https://www.mozilla.org/en-US/firefox/
+- https://www.google.com/chrome/index.html
+- https://www.microsoft.com/en-us/edge
 
 * Postman
 	https://www.postman.com/downloads/
