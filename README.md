@@ -49,9 +49,9 @@ Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framewor
 	de la página.
 	
 * Navegadores Web actualizados a la última versión. 
-- https://www.mozilla.org/en-US/firefox/
-- https://www.google.com/chrome/index.html
-- https://www.microsoft.com/en-us/edge
+	- https://www.mozilla.org/en-US/firefox/
+	- https://www.google.com/chrome/index.html
+	- https://www.microsoft.com/en-us/edge
 
 * Postman
 	https://www.postman.com/downloads/
