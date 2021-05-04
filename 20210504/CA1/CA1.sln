@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CA1", "CA1\CA1.csproj", "{02E76491-FBD6-4BB9-A055-B177806B9A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEP.Model", "MEP.Model\MEP.Model.csproj", "{CAA82AAE-D6A9-45C2-AD01-322A8F2522ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02E76491-FBD6-4BB9-A055-B177806B9A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E76491-FBD6-4BB9-A055-B177806B9A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E76491-FBD6-4BB9-A055-B177806B9A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E76491-FBD6-4BB9-A055-B177806B9A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA82AAE-D6A9-45C2-AD01-322A8F2522ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA82AAE-D6A9-45C2-AD01-322A8F2522ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA82AAE-D6A9-45C2-AD01-322A8F2522ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA82AAE-D6A9-45C2-AD01-322A8F2522ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {164CAEAF-5AA8-4174-8DD0-41F2D77675E1}
+	EndGlobalSection
+EndGlobal
