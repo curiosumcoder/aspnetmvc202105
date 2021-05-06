@@ -10,6 +10,13 @@ namespace Northwind.Store.UI.Shell.Demo
     {
         static void Main(string[] args)
         {
+            using (Data.Northwind db = new Data.Northwind())
+            {
+                foreach (var p in db.Products)
+                {
+                    Console.WriteLine(p.ProductName);
+                }
+            }
         }
     }
 }
