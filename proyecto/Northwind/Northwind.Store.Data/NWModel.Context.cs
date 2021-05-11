@@ -12,12 +12,12 @@ namespace Northwind.Store.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using global::Northwind.Store.Model;
+    using Northwind.Store.Model;
     
-    public partial class Northwind : DbContext
+    public partial class NorthwindContext : DbContext
     {
-        public Northwind()
-            : base("name=Northwind")
+        public NorthwindContext()
+            : base("name=NorthwindContext")
         {
         }
     

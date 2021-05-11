@@ -10,7 +10,7 @@ namespace Northwind.Store.UI.Shell.Demo
     {
         static void Main(string[] args)
         {
-            using (Data.Northwind db = new Data.Northwind())
+            using (var db = new Data.NorthwindContext())
             {
                 foreach (var p in db.Products)
                 {
