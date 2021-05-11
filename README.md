@@ -1,5 +1,5 @@
 # ASP.NET MVC Web Applications (.NET Framework)
-Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framework) impartido para Babel Learning (modalidad virtual) en Mayo 2020.
+Material relacionado con el curso de ASP.NET MVC Web Applications (.NET Framework) impartido para Babel Learning (modalidad virtual) en Mayo 2021.
 
 ### Requerimientos de hardware y software
 * Requisitos mínimos del hardware. 
