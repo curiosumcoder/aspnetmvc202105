@@ -96,6 +96,14 @@ namespace NW.UI.LINQ
             using (var db = new NorthwindContext())
             {
                 // query
+                // IQueryable<T> - no materializada
+                // IEnumerable<T> - materializada
+                var q = from p in db.Products
+                        select p;
+
+                var t1 = q.FirstOrDefault();
+                var t2 = q.ToList();
+
                 var q0 = from p in db.Products
                          where p.ProductName.Contains("queso")
                          select p;
@@ -121,6 +129,9 @@ namespace NW.UI.LINQ
         {
             using (var db = new NorthwindContext())
             {
+                var p0 = db.Products.Single(p => p.ProductID == 1);
+                //p0.UnitPrice = 100;
+
                 int lastId = db.Products.Max(p => p.ProductID);
 
                 var np = new Product()
@@ -176,18 +187,23 @@ namespace NW.UI.LINQ
                 }
             }
 
-            // Proyecciones
+            // * Proyecciones
             using (NorthwindContext db = new NorthwindContext())
             {
                 var q2 = from c in db.Customers
                          select c.Country;
+
                 var q2x = db.Customers.Select(c => c.Country);
 
+                // Usando tipos anónimos
                 var q2y = from c in db.Customers
                           select new { c.CustomerID, c.ContactName };
 
                 var q2z = db.Customers.Select(c =>
                     new { Id = c.CustomerID, c.ContactName });
+
+                var q2a = from c in db.Customers
+                          select new Category() { CategoryName = c.ContactName };
 
                 var q2w = db.Customers.Select(c =>
                     new Category() { CategoryName = c.ContactName });
@@ -206,17 +222,26 @@ namespace NW.UI.LINQ
                     Where(c => c.Country == "Mexico").
                     SelectMany(c => c.Orders);
 
+                // Esto aplica si solo se usar .Select
+                //foreach (var c in q4)
+                //{
+                //    foreach (var o in c)
+                //    {
+
+                //    }
+                //}
+
                 var q4x = db.Orders.
                     Where(o => o.Customer.Country == "Mexico");
 
                 Console.Clear();
-                foreach (var item in q4)
+                foreach (var item in q4x)
                 {
                     Console.WriteLine($"{item.CustomerID}, {item.OrderID}");
                 }
             }
 
-            // Ordenamiento
+            // * Ordenamiento
             using (NorthwindContext db = new NorthwindContext())
             {
                 var q5 = from c in db.Customers
@@ -264,11 +289,11 @@ namespace NW.UI.LINQ
                 var q7x = db.Customers.GroupBy(c => c.Country);
 
                 Console.Clear();
-                foreach (var item in q7)
+                foreach (var grupo in q7)
                 {
-                    Console.WriteLine($"{item.Key}, {item.Count()}");
+                    Console.WriteLine($"{grupo.Key}, {grupo.Count()}");
 
-                    foreach (var c in item)
+                    foreach (var c in grupo)
                     {
                         Console.WriteLine($"\t{c.ContactName}");
                     }
@@ -375,14 +400,16 @@ namespace NW.UI.LINQ
                     c => c.Country == "Mexico")).
                     Select(c => c.Country).Distinct();
 
+                var q11 = db.Customers.Where(c => c.Country == "Germany").Union(db.Customers.Where(c => c.Country == "Italy"));
+
                 Console.Clear();
-                foreach (var item in q10)
+                foreach (var item in q11)
                 {
-                    Console.WriteLine($"{item}");
+                    Console.WriteLine($"{item.ContactName} {item.Country}");
                 }
             }
 
-            // Partición (paginación)
+            // * Partición (paginación)
             using (NorthwindContext db = new NorthwindContext())
             {
                 var q11 = db.Customers.
@@ -392,10 +419,20 @@ namespace NW.UI.LINQ
                 var q12 = db.Customers.
                     OrderBy(c => c.CustomerID).
                     Take(10);
-                // Segunda página de 10 elementos
+
+                // Segunda página de 5 elementos
                 var q13 = db.Customers.
                     OrderBy(c => c.CustomerID).
-                    Skip(10).Take(10);
+                    Skip(5).Take(5);
+
+                // SELECT*
+                // FROM[dbo].[Products] AS[Extent1]
+                // ORDER BY row_number() OVER(ORDER BY[Extent1].[ProductID] ASC)
+                // OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY
+
+                var q14 = db.Customers.
+                    OrderBy(c => c.CustomerID).
+                    TakeWhile(c => c.Country == "Mexico");
 
                 Console.Clear();
                 foreach (var item in q13)
@@ -404,7 +441,7 @@ namespace NW.UI.LINQ
                 }
             }
 
-            // Modificación de consulta
+            // * Modificación de consulta
             using (NorthwindContext db = new NorthwindContext())
             {
                 var q14 = db.Customers.
@@ -424,7 +461,7 @@ namespace NW.UI.LINQ
                 }
             }
 
-            // Métodos útiles
+            // * Métodos útiles
             using (NorthwindContext db = new NorthwindContext())
             {
                 var o1 = db.Customers.First();
@@ -434,6 +471,8 @@ namespace NW.UI.LINQ
                 o1 = db.Customers.Where(c => c.CustomerID == "ALFKI").
                     SingleOrDefault();
 
+                o1 = db.Customers.SingleOrDefault(c => c.CustomerID == "ALFKI");
+
                 var o2 = db.Customers.All(c => c.Orders.Count > 5 &&
                         c.Country == "Mexico");
                 o2 = db.Customers.
@@ -441,6 +480,9 @@ namespace NW.UI.LINQ
 
                 var sum = db.OrderDetails.
                     Sum(od => od.Quantity * od.UnitPrice);
+
+                var avg = db.OrderDetails.
+                    Average(od => od.Quantity * od.UnitPrice);
             }
         }
 
@@ -474,7 +516,7 @@ namespace NW.UI.LINQ
                        Include("Orders.OrderDetails").
                        OrderBy(c => c.CustomerID).
                        Skip(10).Take(2)
-                                       select c;
+                       select c;
 
                 var customersOrders2x = db.Customers.
                     Include("Orders").
@@ -496,13 +538,16 @@ namespace NW.UI.LINQ
             }
         }
 
+        /// <summary>
+        /// Por defecto la carga de datos relacionados
+        /// se hace de forma "reactiva" o bajo demanda (Lazy Loading = true)
+        /// </summary>
         static void LazyLoading()
         {
             // Lazy Loading
             using (NorthwindContext db = new NorthwindContext())
             {
-                //bool isLazy = true;
-                //db.Configuration.LazyLoadingEnabled = isLazy; // default = true
+                //db.Configuration.LazyLoadingEnabled = false; // default = true
 
                 // .Include(c=>c.Orders). // Eager Loading
                 var customers = db.Customers.
@@ -512,7 +557,7 @@ namespace NW.UI.LINQ
                 {
                     Console.WriteLine($"{c.CustomerID}, {c.ContactName}");
 
-                    //if (!isLazy)
+                    //if (!db.Configuration.LazyLoadingEnabled)
                     //{
                     //    db.Entry(c).Collection(o => o.Orders).Load();
                     //}
@@ -522,7 +567,7 @@ namespace NW.UI.LINQ
 
                 foreach (var o in db.Orders)
                 {
-                    //if (!isLazy)
+                    //if (!db.Configuration.LazyLoadingEnabled )
                     //{
                     //    db.Entry(o).Reference(c => c.Customer).Load();
                     //}
@@ -627,7 +672,7 @@ namespace NW.UI.LINQ
                 var tran = db.Database.BeginTransaction();
                 try
                 {
-                    // Acciones
+                    // Sus acciones aquí
                     tran.Commit();
                 }
                 catch (Exception)
@@ -755,4 +800,5 @@ namespace NW.UI.LINQ
         }
         #endregion
     }
+
 }

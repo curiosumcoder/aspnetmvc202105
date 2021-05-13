@@ -1,0 +1,20 @@
+﻿@model List<NW.Model.Product>
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<form>
+    <input type="search" name="filtro" placeholder="Digite aquí" />
+</form>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <ul>
+        @foreach (var p in Model)
+        {
+            <li>@p.ProductName</li>
+        }
+    </ul>
+}
