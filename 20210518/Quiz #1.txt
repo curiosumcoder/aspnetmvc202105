@@ -37,6 +37,7 @@ IDEAS:
 	SELECT p.ProductName, p.UnitPrice, c.CategoryName
 	FROM Products p, Categories c
 	WHERE p.ProductName LIKE '%queso%'
-	AND c.CategoryID = p.CategoryID   
-
+	AND c.CategoryID = p.CategoryID  
+	
+Límite de entrega: 11:59PM del 19/05/2021
 -- ÚLTIMA LÍNEA --
