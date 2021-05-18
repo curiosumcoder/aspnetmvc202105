@@ -30,7 +30,7 @@ OPCIONAL 1: Modificar la aplicación quiz1, para que además de aplicar el filtr
    se puede explorar por páginas de 10 registros, esto haciendo uso de las
    teclas "<" atrás y adelante ">".
 
-OPCIONAL 2: Crear una aplicación de ASP.NET MVC que haga no mismo que 
+OPCIONAL 2: Crear una aplicación de ASP.NET MVC que haga lo mismo que 
 hace la aplicación de consola creada previmente por los pasos anteriores.
    
 IDEAS:
