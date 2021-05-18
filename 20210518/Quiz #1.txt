@@ -1,0 +1,42 @@
+ASP.NET MVC
+
+Prof. Gilberto Bermúdez. gbermude@outlook.com
+
+Objetivo: Crear una aplicación de consola que permita consultar la lista
+de productos, aplicando un filtro por medio del nombre del producto.
+
+1. Crear una aplicación de consola utilizando el .NET Framework y el lenguage C#.
+   Asignar el nombre quiz1 a la aplicación por crear. Valor: 2 puntos.
+
+2. Dentro de la aplicación quiz1 y haciendo uso del Entity Framework generar 
+   el código de acceso a datos (clase de contexto y modelos (entidades)) 
+   necesario para poder conectarse a la base de datos Northwind y poder efectuar 
+   consultas sobre la tabla Products. Valor: 3 puntos.
+   
+3. Modificar la aplicación quiz1 para que se pueda capturar desde el teclado
+   letras o palabras que puedan ser utilizadas para hacer un filtro de
+   productos, aplicando el filtro sobre el campo ProductName. Valor: 1 punto.
+   
+4. Modificar la aplicación quiz1 para que tomando las letras o palabras
+   capturas en punto anterior, se obtenga un listado de productos, 
+   filtrado por todos aquellos productos que contengan todo o parte del
+   filtro en el campo ProductName. Valor: 4 puntos.
+   
+   En el listado se deben presentar únicamente los campos: ProductName,
+   UnitPrice y CategoryName.
+
+OPCIONAL 1: Modificar la aplicación quiz1, para que además de aplicar el filtro
+   deacuerdo a los especificado por el usuario, el listado resultante
+   se puede explorar por páginas de 10 registros, esto haciendo uso de las
+   teclas "<" atrás y adelante ">".
+
+OPCIONAL 2: Crear una aplicación de ASP.NET MVC que haga no mismo que 
+hace la aplicación de consola creada previmente por los pasos anteriores.
+   
+IDEAS:
+	SELECT p.ProductName, p.UnitPrice, c.CategoryName
+	FROM Products p, Categories c
+	WHERE p.ProductName LIKE '%queso%'
+	AND c.CategoryID = p.CategoryID   
+
+-- ÚLTIMA LÍNEA --

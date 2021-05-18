@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{
+    var products = (List<WA1.Models.Product>)ViewData["products"];
+    products = (List<WA1.Models.Product>)ViewBag.products;
+}
+<br />
+
+<form method="post">
+    <input type="search" name="filtro" value="@ViewBag.filtro" />
+    <button>Buscar</button>
+</form>
+
+<br />
+@if (products.Count > 0)
+{
+    <ul>
+        @foreach (var p in products)
+        {
+            <li>@p.ProductName</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay resultados</p>
+}

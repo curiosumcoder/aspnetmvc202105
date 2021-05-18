@@ -1,11 +1,11 @@
 ﻿@model List<NW.Model.Product>
-
+@*@model WA1.ViewModels.InformeViewModel*@
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<form>
+<form method="post">
     <input type="search" name="filtro" placeholder="Digite aquí" />
 </form>
 
@@ -18,3 +18,6 @@
         }
     </ul>
 }
+
+@ViewBag.datos = "";
+@ViewData["datos"] = "";

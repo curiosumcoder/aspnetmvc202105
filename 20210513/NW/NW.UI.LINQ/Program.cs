@@ -20,7 +20,7 @@ namespace NW.UI.LINQ
             string lectura = "";
             do
             {
-                Console.WriteLine("Seleccione una opción:\n1. Basic\n2. CRUD\n3. LINQ To Entities\n4. Eager Loading\n5. Lazy Loading\n6. LINQ Dynamic\n7. LINQ To XML\n8. PLINQ\n9. Transactions\n10. Store Procedures\n11. Raw SQL\n12. Raw SQL Client (ADO.NET)\n");
+                Console.WriteLine("Seleccione una opción:\n1. Basic\n2. CRUD\n3. LINQ To Entities\n4. Lazy Loading\n5. Eager Loading\n6. LINQ Dynamic\n7. LINQ To XML\n8. PLINQ\n9. Transactions\n10. Store Procedures\n11. Raw SQL\n12. Raw SQL Client (ADO.NET)\n");
 
                 lectura = Console.ReadLine();
 
@@ -44,12 +44,12 @@ namespace NW.UI.LINQ
                             LINQToEntities();
                             break;
                         case 4:
-                            Console.WriteLine("EagerLoading");
-                            EagerLoading();
-                            break;
-                        case 5:
                             Console.WriteLine("LazyLoading");
                             LazyLoading();
+                            break;
+                        case 5:
+                            Console.WriteLine("EagerLoading");
+                            EagerLoading();
                             break;
                         case 6:
                             Console.WriteLine("LINQDynamic");
@@ -485,59 +485,6 @@ namespace NW.UI.LINQ
                     Average(od => od.Quantity * od.UnitPrice);
             }
         }
-
-        static void EagerLoading()
-        {
-            // Eager Loading
-            using (NorthwindContext db = new NorthwindContext())
-            {
-                // Proyección
-                var customersOrders =
-                    from c in db.Customers.
-                        OrderBy(c => c.CustomerID).
-                        Skip(10).Take(2)
-                    select new
-                    {
-                        Cliente = c,
-                        Ordenes = c.Orders
-                    };
-
-                foreach (var c in customersOrders)
-                {
-                    Console.WriteLine($"{c.Cliente.CustomerID}, {c.Cliente.ContactName}");
-                    foreach (var o in c.Ordenes)
-                    {
-                        Console.WriteLine($"{o.OrderID}, {o.OrderDate}");
-                    }
-                }
-
-                var customersOrders2 = from c in db.Customers.
-                       Include("Orders").
-                       Include("Orders.OrderDetails").
-                       OrderBy(c => c.CustomerID).
-                       Skip(10).Take(2)
-                       select c;
-
-                var customersOrders2x = db.Customers.
-                    Include("Orders").
-                    Include("CustomerDemographics").Take(2);
-
-                foreach (var c in customersOrders2)
-                {
-                    Console.WriteLine($"{c.CustomerID}, {c.ContactName}");
-                    foreach (var o in c.Orders)
-                    {
-                        Console.WriteLine($"{o.OrderID}, {o.OrderDate}");
-
-                        foreach (var od in o.OrderDetails)
-                        {
-                            Console.WriteLine($"{od.ProductID}, {od.Quantity}");
-                        }
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Por defecto la carga de datos relacionados
         /// se hace de forma "reactiva" o bajo demanda (Lazy Loading = true)
@@ -573,7 +520,61 @@ namespace NW.UI.LINQ
                     //}
 
                     Console.WriteLine(o.Customer.ContactName);
-                    Console.WriteLine($"{o.OrderID}, {o.OrderDate}");
+                    Console.WriteLine($"{o.OrderID}, {o.OrderDate}, {o.OrderDetails.Count()}");
+                }
+            }
+        }
+
+        static void EagerLoading()
+        {
+            // Eager Loading
+            using (NorthwindContext db = new NorthwindContext())
+            {
+                // Proyección
+                var customersOrders =
+                    from c in db.Customers.
+                        OrderBy(c => c.CustomerID).
+                        Skip(10).Take(2)
+                    select new
+                    {
+                        Cliente = c,
+                        Ordenes = c.Orders
+                    };
+
+                foreach (var c in customersOrders)
+                {
+                    Console.WriteLine($"{c.Cliente.CustomerID}, {c.Cliente.ContactName}");
+                    foreach (var o in c.Ordenes)
+                    {
+                        Console.WriteLine($"{o.OrderID}, {o.OrderDate}");
+                    }
+                }
+
+                // Se usa Include con el nombre de la propiedad
+                // de navegación
+                var customersOrders2 = from c in db.Customers.
+                       Include("Orders").
+                       Include("Orders.OrderDetails").
+                       OrderBy(c => c.CustomerID).
+                       Skip(10).Take(2)
+                       select c;
+
+                var customersOrders2x = db.Customers.
+                    Include("Orders").
+                    Include("CustomerDemographics").Take(2);
+
+                foreach (var c in customersOrders2)
+                {
+                    Console.WriteLine($"{c.CustomerID}, {c.ContactName}");
+                    foreach (var o in c.Orders)
+                    {
+                        Console.WriteLine($"{o.OrderID}, {o.OrderDate}");
+
+                        foreach (var od in o.OrderDetails)
+                        {
+                            Console.WriteLine($"{od.ProductID}, {od.Quantity}");
+                        }
+                    }
                 }
             }
         }
@@ -639,12 +640,15 @@ namespace NW.UI.LINQ
             }
         }
 
+        /// <summary>
+        /// DATOS EN MEMORIA
+        /// </summary>
         static void PLINQ()
         {
             Console.WriteLine("Experimento PLINQ en proceso ...");
 
             // Parallel LINQ
-            var nums = Enumerable.Range(1, 10000);
+            var nums = Enumerable.Range(1, 100000);
 
             var query = from n in nums.AsParallel()
                         where ToDo(n) == n
@@ -673,6 +677,11 @@ namespace NW.UI.LINQ
                 try
                 {
                     // Sus acciones aquí
+                    db.SaveChanges();
+
+                    // Sus acciones aquí
+                    db.SaveChanges();
+                    
                     tran.Commit();
                 }
                 catch (Exception)
@@ -691,6 +700,13 @@ namespace NW.UI.LINQ
                     // CRUD actions
                     db.SaveChanges();
                 }
+
+                using (var db = new NorthwindContext())
+                {
+                    // CRUD actions
+                    db.SaveChanges();
+                }
+
                 ts.Complete();
             }
         }
@@ -699,7 +715,7 @@ namespace NW.UI.LINQ
         {
             using (var db = new NorthwindContext())
             {
-                var inicio = new DateTime(1998, 1, 1);
+                var inicio = new DateTime(1997, 1, 1);
                 var fin = DateTime.Now;
                 var sales = db.SalesByYear(inicio, fin);
 

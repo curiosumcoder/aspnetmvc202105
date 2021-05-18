@@ -10,6 +10,13 @@ namespace WA1.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// GET Home/Index
+        /// GET Home
+        /// GET /
+        /// </summary>
+        /// <param name="filtro"></param>
+        /// <returns></returns>
         public ActionResult Index(string filtro = "")
         {
             List<Product> products = null;
@@ -19,9 +26,26 @@ namespace WA1.Controllers
                 products = db.Products.Where(p => p.ProductName.Contains(filtro)).ToList();
             }
 
+            ViewBag.datos = "";
+            ViewData["datos"] = "";
+
             return View(products);
         }
+    
+        /// <summary>
+        /// GET Home/Index/123
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Index2(int? id)
+        {
+            return RedirectToAction("Index");
+        }
 
+        /// <summary>
+        /// GET About
+        /// </summary>
+        /// <returns></returns>
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
