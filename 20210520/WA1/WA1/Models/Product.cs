@@ -11,10 +11,14 @@ namespace WA1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Product
     {
         public int ProductID { get; set; }
+
+        [Display(Name = "Nombre de Producto")]
+        [Required(ErrorMessage = "El {0} es requerido.")]
         public string ProductName { get; set; }
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> CategoryID { get; set; }

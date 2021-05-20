@@ -1,25 +1,20 @@
-﻿
+﻿@using WA1.ViewModels
+@model HomeIndexViewModel
 @{
-    //Layout = "~/Views/Shared/Imprimir.cshtml";
     ViewBag.Title = "Home Page";
 }
 
-@{
-    var products = (List<WA1.Models.Product>)ViewData["products"];
-    products = (List<WA1.Models.Product>)ViewBag.products;
-}
 <br />
-
 <form method="post">
-    <input type="search" name="filtro" value="@ViewBag.filtro" />
+    <input type="search" name="filtro" value="@Model.Filtro" />
     <button>Buscar</button>
 </form>
 
 <br />
-@if (products.Count > 0)
+@if (Model.Productos.Count > 0)
 {
     <ul>
-        @foreach (var p in products)
+        @foreach (var p in Model.Productos)
         {
             <li>@p.ProductName</li>
         }

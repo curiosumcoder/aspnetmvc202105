@@ -4,12 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WA1.Models;
+using WA1.ViewModels;
 
 namespace WA1.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string filtro = "")
+        public ActionResult Index(HomeIndexViewModel vm)
+        {           
+            using (var db = new NorthwindContext())
+            {
+                vm.Productos = db.Products.Where(p => p.ProductName.Contains(vm.Filtro)).ToList();
+            }
+
+            return View(vm);
+        }
+
+        public ActionResult IndexOLD(string filtro = "")
         {
             List<Product> ps = new List<Product>();
 
@@ -19,11 +30,11 @@ namespace WA1.Controllers
             }
 
             ViewBag.filtro = filtro;
-
             ViewData["products"] = ps;
             ViewBag.products = ps;
 
-            return View();
+            //return View();
+            return View(ps);
         }
 
         public ActionResult About()
