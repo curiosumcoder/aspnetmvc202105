@@ -1,0 +1,105 @@
+﻿@using Laboratorio1.Helpers.HTML
+@model Laboratorio1.ViewModels.HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-4">
+        @Ajax.ActionLink("Get Detail", "IndexPartial", new { id = 1 },
+       new AjaxOptions() { UpdateTargetId = "demo" })
+    </div>
+    <div class="col-8">
+        @using (Ajax.BeginForm("IndexPartial",
+                        new AjaxOptions
+                        {
+                            OnFailure = "productAjaxFailure",
+                            UpdateTargetId = "demo"
+                        }))
+        {
+            <div class="form-group">
+                <label>Product ID</label>
+                <input type="text" class="form-control" name="id" placeholder="Type product ID">
+            </div>
+            <button type="submit" class="btn btn-primary">Get Detail</button>
+        }
+        <script>
+            function productAjaxFailure(xhr) {
+                if (xhr.status === 404) {
+                    alert('Product not found!');
+                }
+            }
+        </script>
+    </div>
+</div>
+<table class="table table-bordered table-striped">
+    <tbody id="demo"></tbody>
+</table>
+
+@section scripts {
+    <script src="~/Content/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js"></script>
+}
+
+<hr />
+
+<div class="row">
+    <div class="col-12">
+
+        <h2>Products</h2>
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <input type="search" class="form-control" name="filter"
+                       placeholder="Search filter ..." value="@Model.Filter">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        }
+
+        @if (Model != null && Model.Items.Count > 0)
+        {
+            foreach (var cg in Model.Items)
+            {
+                <section>
+                    <h3>@cg.CategoryName</h3>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>QuantityPerUnit</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in cg.Products)
+                            {
+                                @*<tr>
+                                        <td>@p.ProductName</td>
+                                        <td>@p.QuantityPerUnit</td>
+                                        <td>@p.UnitPrice</td>
+                                        <td>@p.UnitsInStock</td>
+                                    </tr>*@
+                                @*@ProductHelper.ProductDetail(p)*@
+                                @*@ProductHelper.ProductDetail2(p)*@
+                                @*@Html.ProductDetail(p)*@
+                                //Html.RenderPartial("ProductPartial", p);
+                                @*@Html.Partial("ProductPartial", p)*@
+                                @*@GlobalHelpers.ProductDetail(p)*@
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    Items<span class="badge">@cg.Products.Count</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </section>
+            }
+        }
+    </div>
+</div>

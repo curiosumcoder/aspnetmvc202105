@@ -1,0 +1,18 @@
+﻿@helper ProductDetail(Northwind.Store.Model.Product p)
+{
+    if (p != null)
+    {
+        <tr>
+            <td>@p.ProductName</td>
+            <td>@p.QuantityPerUnit</td>
+            <td>@p.UnitPrice</td>
+            <td>@p.UnitsInStock</td>
+            <td>
+                <a asp-controller="Product" asp-action="Detail"
+                   asp-route-id="@p.ProductID">
+                    Detail
+                </a>
+            </td>
+        </tr>
+    }
+}
