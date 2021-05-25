@@ -5,6 +5,9 @@
     ViewBag.Title = "Home Page";
 }
 
+ @*AJAX - Asyncronous JavaScript & XML, técnica (XmlHttpRequest - HTTP) 
+     fetch
+     *@ 
 <div class="row">
     <div class="col-4">
         @Ajax.ActionLink("Get Detail", "IndexPartial", new { id = 1 },
@@ -77,17 +80,18 @@
                             @foreach (var p in cg.Products)
                             {
                                 @*<tr>
-                                        <td>@p.ProductName</td>
-                                        <td>@p.QuantityPerUnit</td>
-                                        <td>@p.UnitPrice</td>
-                                        <td>@p.UnitsInStock</td>
-                                    </tr>*@
-                                @*@ProductHelper.ProductDetail(p)*@
-                                @*@ProductHelper.ProductDetail2(p)*@
-                                @*@Html.ProductDetail(p)*@
+                                            <td>@p.ProductName</td>
+                                            <td>@p.QuantityPerUnit</td>
+                                            <td>@p.UnitPrice</td>
+                                            <td>@p.UnitsInStock</td>
+                                        </tr>
+                                    @ProductHelper.ProductDetail(p)
+                                    @ProductHelper.ProductDetail2(p)
+                                    @Html.ProductDetail(p)*@
                                 //Html.RenderPartial("ProductPartial", p);
                                 @*@Html.Partial("ProductPartial", p)*@
-                                @*@GlobalHelpers.ProductDetail(p)*@
+                                @*@ProductDetail1(p)*@
+                                @GlobalHelpers.ProductDetail(p)
                             }
                         </tbody>
                         <tfoot>
@@ -103,3 +107,22 @@
         }
     </div>
 </div>
+
+@helper ProductDetail1(Northwind.Store.Model.Product p)
+{
+    if (p != null)
+    {
+        <tr>
+            <td><strong>@p.ProductName</strong></td>
+            <td>@p.QuantityPerUnit</td>
+            <td>@p.UnitPrice</td>
+            <td>@p.UnitsInStock</td>
+            <td>
+                <a asp-controller="Product" asp-action="Detail"
+                   asp-route-id="@p.ProductID">
+                    Detail
+                </a>
+            </td>
+        </tr>
+    }
+}
