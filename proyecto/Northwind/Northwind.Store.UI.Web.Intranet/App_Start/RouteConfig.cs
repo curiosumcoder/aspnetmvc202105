@@ -15,6 +15,7 @@ namespace Northwind.Store.UI.Web.Intranet
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // Agregar para al soporte de múltiples Áreas
+            // using System.Web.Compilation;
             // namespaces: new[] { $"{BuildManager.GetGlobalAsaxType().BaseType.Assembly.GetName().Name}.Controllers" }
             routes.MapRoute(
                 name: "Default",
