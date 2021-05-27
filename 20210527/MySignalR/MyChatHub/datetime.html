@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/json2.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+</head>
+<body>
+    <div id="clock">
+    </div>
+    <script>
+        $(function () {
+
+            var hub = $.connection.dateTimeHub;
+            $.connection.logging = true;
+
+            hub.client.update = function (datetime) {
+                $('#clock').text(datetime);
+            };
+
+            $.connection.hub.start().done(function () {
+                console.log("Connection to DateTimeHub is ready!");
+            });
+        });
+    </script>
+</body>
+</html>

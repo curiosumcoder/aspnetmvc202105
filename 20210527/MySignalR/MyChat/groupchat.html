@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/json2.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.2.min.js"></script>
+</head>
+<body>
+    <h1>My Chat</h1>
+    <div>
+        <label>Grupo</label>
+        <input type="text" id="group" /><br />
+        <label>Mensage</label>
+        <input type="text" id="message" /><br />
+        <button id="chat">Chat</button>
+        <button id="connect">Conectar</button>
+        <button id="disconnect">Desconectar</button>
+    </div>
+    <script>
+        $(function () {
+
+            $("#connect").click(function () {
+
+                var g = "group=" + $("#group").val();
+
+                var connection = $.connection("/groupchat", g);
+                connection.logging = true;
+
+                connection.received(function (data) {
+                    chatMessage = JSON.parse(data);
+                    $("body").append(chatMessage.message + "<br />");
+                });
+
+                connection.error(function (err) {
+                    alert("Problema en la conexión SignalR. \n" + "Error: " + err.message);
+                });
+
+                connection.start().done(function () {
+                    $("#chat").click(function () {
+                        var data = { groupName: $("#group").val(), message: $("#message").val() };
+                        connection.send(data);
+                        $("#message").val("").focus();
+                    });
+                }).fail(function () {
+                    alert("Problema en la conexión inicial de SignalR.");
+                });
+
+                $("#disconnect").click(function () {
+                    connection.stop();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

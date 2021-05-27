@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/json2.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.2.min.js"></script>
+</head>
+<body>
+    <a href="echo.html">Echo</a>
+    <a href="groupchat.html">Group Chat</a>
+    <hr />
+    <h1>My Chat</h1>
+    <div>
+        <input type="text" id="message" />
+        <button id="chat">Chat</button>
+    </div>
+    <script>
+        $(function () {
+            var connection = $.connection("/chat");
+            connection.logging = true;
+
+            connection.received(function (data) {
+                $("body").append(data + "<br />");
+            });
+
+            connection.error(function (err) {
+                alert("Problema en la conexión SignalR. \n" + "Error: " + err.message);
+            });
+
+            connection.start().done(function () {
+                $("#chat").click(function () {
+                    connection.send($("#message").val());
+                    $("#message").val("").focus();
+                });
+            }).fail(function () {
+                alert("Problema en la conexión inicial de SignalR.");
+            });;
+        });
+    </script>
+
+</body>
+</html>

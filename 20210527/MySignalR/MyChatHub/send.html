@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/json2.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+</head>
+<body>
+    <script>
+        $(function () {
+
+            var hub = $.connection.sendMessageHub;
+            $.connection.logging = true;
+
+            hub.client.received = function (data) {
+                console.log(data.message);
+            };
+
+            $.connection.hub.start().done(function () {
+                var message = { priority : 1, message : "Demo1"};
+
+                hub.server.send(message);
+            });
+        });
+    </script>
+</body>
+</html>
