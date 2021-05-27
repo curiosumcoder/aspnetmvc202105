@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace Northwind.Store.Model
@@ -12,6 +13,7 @@ namespace Northwind.Store.Model
         {
             [Display(Name = "Nombre de Producto")]
             [Required(ErrorMessage = "El {0} es requerido.")]
+            [MinLength(5,ErrorMessage = "Se requiere al menos {1} caracteres")]
             public string ProductName { get; set; }
 
             [Required(ErrorMessage = "El ID de proveedor es requerido.")]
@@ -29,5 +31,8 @@ namespace Northwind.Store.Model
             [JsonIgnore]
             public virtual Supplier Supplier { get; set; }
         }
+
+        [NotMapped]
+        public object Empaque { get; set; }
     }
 }

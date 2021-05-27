@@ -17,10 +17,17 @@ namespace Northwind.Store.UI.Web.Intranet.Areas.Admin.Controllers
         private NorthwindContext db = new NorthwindContext();
 
         // GET: Admin/Product
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(PageFilter pf = null)
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Supplier);
-            return View(await products.ToListAsync());
+            //var products = db.Products.Include(p => p.Category).Include(p => p.Supplier);
+            //return View(await products.ToListAsync());
+
+            pf.DefaultSort = "ProductName";
+
+            var pD = new ProductD();
+            var result = await pD.ReadAsync(pf);
+            ViewBag.Total = pf.Count;
+            return View(result);
         }
 
         // GET: Admin/Product/Details/5

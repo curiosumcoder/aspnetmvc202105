@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label>Product</label>
+            <input type="text" class="form-control" id="filter" name="filter" placeholder="Type product name">
+        </div>
+        <button type="submit" class="btn btn-primary">Get</button>
+    }
+
+    <ul id="lResults">
+
+    </ul>
+</main>
+
+@section scripts {
+    <script src="~/Scripts/index.js"></script>
+}
